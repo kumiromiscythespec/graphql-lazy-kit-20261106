@@ -1,0 +1,58 @@
+fragment UserIdentity on User {
+  id
+  username
+  displayName
+}
+
+fragment UserSummary on User {
+  ...UserIdentity
+  avatarUrl
+  joinedAt
+  manager {
+    ...UserIdentity
+  }
+}
+
+fragment OrganizationSummary on Organization {
+  id
+  name
+  owner {
+    ...UserSummary
+  }
+}
+
+fragment ProjectSummary on Project {
+  id
+  name
+  createdAt
+  metadata
+  members {
+    ...UserSummary
+  }
+}
+
+fragment CommentDetails on Comment {
+  id
+  body
+  createdAt
+  author {
+    ...UserIdentity
+  }
+}
+
+fragment TaskDetails on Task {
+  id
+  title
+  status
+  labels
+  dueAt
+  assignee {
+    ...UserSummary
+  }
+  comments {
+    ...CommentDetails
+  }
+  project {
+    ...ProjectSummary
+  }
+}

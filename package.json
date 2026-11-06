@@ -1,0 +1,19 @@
+{
+  "name": "graphql-lazy-kit",
+  "version": "1.0.0",
+  "description": "Schema-first TypeScript GraphQL clients with typed selections and lazy fragment modules",
+  "type": "module",
+  "bin": { "graphql-lazy-kit": "dist/cli.js" },
+  "exports": { ".": "./dist/generator.js", "./runtime": "./dist/runtime.js" },
+  "files": ["dist", "src/runtime.ts", "README.md", "MIGRATION.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "example": "node dist/cli.js --schema examples/schema.graphql --out examples/generated --fragments examples/fragments.graphql --scalar DateTime=string --scalar \"JSON=Record<string,unknown>\"",
+    "benchmark": "node scripts/bundle-analysis.mjs"
+  },
+  "engines": { "node": ">=20.11" },
+  "dependencies": { "graphql": "16.11.0" },
+  "devDependencies": { "typescript": "5.9.3", "@types/node": "24.10.0", "esbuild": "0.25.12" },
+  "license": "MIT"
+}

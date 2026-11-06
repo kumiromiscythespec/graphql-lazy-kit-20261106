@@ -1,0 +1,93 @@
+scalar DateTime
+scalar JSON
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+type User {
+  id: ID!
+  username: String!
+  displayName: String
+  avatarUrl: String
+  joinedAt: DateTime!
+  profile: JSON
+  manager: User
+  organizations: [Organization!]!
+  tasks(status: TaskStatus, limit: Int = 20): [Task!]!
+  tags: [String]
+}
+
+type Organization {
+  id: ID!
+  name: String!
+  owner: User!
+  projects(includeArchived: Boolean = false): [Project!]!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  metadata: JSON!
+  members: [User!]!
+  tasks(filter: TaskFilter): [Task!]!
+}
+
+type Task {
+  id: ID!
+  title: String!
+  status: TaskStatus!
+  project: Project!
+  assignee: User
+  comments(limit: Int = 20): [Comment!]!
+  labels: [String!]!
+  dueAt: DateTime
+}
+
+type Comment {
+  id: ID!
+  body: String!
+  author: User!
+  createdAt: DateTime!
+}
+
+input TaskFilter {
+  status: TaskStatus
+  assigneeId: ID
+  limit: Int
+}
+
+input CreateTaskInput {
+  projectId: ID!
+  title: String!
+  assigneeId: ID
+  labels: [String!]
+  dueAt: DateTime
+  metadata: JSON
+}
+
+input UpdateTaskInput {
+  title: String
+  status: TaskStatus
+  dueAt: DateTime
+}
+
+type Query {
+  user(id: ID!): User
+  organization(id: ID!): Organization
+  project(id: ID!): Project
+  task(id: ID!): Task
+  users(limit: Int! = 10): [User!]!
+  searchTasks(filter: TaskFilter): [Task!]!
+  serverTime: DateTime!
+  settings: JSON!
+}
+
+type Mutation {
+  createTask(input: CreateTaskInput!): Task!
+  updateTask(id: ID!, input: UpdateTaskInput!): Task!
+  addComment(taskId: ID!, body: String!): Comment!
+}
