@@ -2,6 +2,14 @@
 
 Generate a standalone, typed TypeScript GraphQL client from SDL or introspection JSON. Query and mutation builders check field names and arguments, parameterize values, and load only the fragment modules an operation uses.
 
+## Optional hosted packaging — temporary beta
+
+[Prepare a checked client ZIP](https://appearing-bass-interact-relevance.trycloudflare.com) from your public SDL, optional fragments and safe scalar mappings. The service generates and strictly compiles the client before showing a payment request, then provides the ZIP after a matching finalized payment of **39.60 USDC on Solana mainnet**. Payment goes directly to the displayed recipient; the service does not connect a wallet, request private keys, sign, swap, withdraw or send funds.
+
+Use the full order-specific Solana Pay link or QR so its reference is included. Save the recovery file to restore the same prepared order. New checkout preparation closes on **7 November 2026 at 10:28:44 UTC**; existing download sessions remain available until **14 November 2026 at 10:29:44 UTC**. This is a temporary beta endpoint with no uptime guarantee. Check this README for its current URL if the endpoint changes.
+
+The CLI and source below remain free under MIT. The optional fee covers schema-specific generation, strict compilation and packaging. No backend deployment, live API integration or revisions are included.
+
 ## Run
 
 Requires Node.js 20.11 or later. The dependencies are pinned in `package-lock.json`.
